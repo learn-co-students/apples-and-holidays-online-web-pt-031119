@@ -27,23 +27,44 @@ def add_supply_to_winter_holidays(holiday_hash, supply)
   # add the second argument, which is a supply, to BOTH the
   # Christmas AND the New Year's arrays
 
+holiday_hash[:winter][:christmas] = supply
+holiday_hash[:winter][:new_years] = supply
+
+#holiday_hash[:winter].each do |holiday, items|
+ #   items << supply
+ #   puts items
+ # end
+
 end
 
 
 def add_supply_to_memorial_day(holiday_hash, supply)
   # again, holiday_hash is the same as the ones above
   # add the second argument to the memorial day array
+  holiday_hash[:spring][:memorial_day] << supply
 
 end
 
 def add_new_holiday_with_supplies(holiday_hash, season, holiday_name, supply_array)
-  # code here
   # remember to return the updated hash
+  holiday_hash[season][holiday_name] = supply_array
+  holiday_hash
+
 
 end
 
 def all_winter_holiday_supplies(holiday_hash)
   # return an array of all of the supplies that are used in the winter season
+  supply_array = []
+  supply_a = holiday_hash[:winter][:christmas]
+  supply_b = holiday_hash[:winter][:new_years]
+  supply_array << supply_a
+  supply_array << supply_b
+  supply_array.flatten
+
+  # holiday_supplies = []
+  # holiday_supplies << holiday_hash[:winter].values
+  # holiday_supplies.flatten(2)
 
 end
 
@@ -55,11 +76,29 @@ def all_supplies_in_holidays(holiday_hash)
   # Summer:
   #   Fourth Of July: Fireworks, BBQ
   # etc.
-
+  holiday_hash.each do |season, holiday_name|
+    puts season.to_s.capitalize << ":"
+    holiday_name.each do |holiday, supply|
+      supply = supply.join(", ")
+      holiday = holiday.to_s.split("_")
+        holiday.map do |name|
+          name.capitalize!
+        end
+      puts "  #{holiday.join(" ")}: #{supply}"
+    end
+  end
 end
 
 def all_holidays_with_bbq(holiday_hash)
   # return an array of holiday names (as symbols) where supply lists
   # include the string "BBQ"
-
+  names = []
+  holiday_hash.map do |season, holiday_name|
+    holiday_name.map do |holiday, supply|
+      if supply.include? "BBQ"
+        names << holiday
+      end
+    end
+  end
+  names
 end

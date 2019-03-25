@@ -24,7 +24,7 @@ end
 
 def add_supply_to_winter_holidays(holiday_hash, supply)
   holiday_hash.each do |season, specific_holiday_hash|
-    specific_holiday_hash.each do |holiday, supplies|
+    specific_holiday_hash.each do |holiday_name, supplies|
       supplies << supply
 #  binding.pry
     end
@@ -68,9 +68,9 @@ end
 
 
 def all_supplies_in_holidays(holiday_hash)
-  holiday_hash.each do |season, holiday_hash|
+  holiday_hash.each do |season, specific_holiday_hash|
     puts "#{season.to_s.capitalize}:"
-    holiday_hash.each do |holiday_name, supplies|
+    specific_holiday_hash.each do |holiday_name, supplies|
       puts "  #{holiday_name.to_s.split("_").collect{|element| element.capitalize}.join(" ")}: #{supplies.join(", ")}"
     end
   end
@@ -87,8 +87,8 @@ end
 
 def all_holidays_with_bbq(holiday_hash)
   holiday_name_with_bbq = []
-  holiday_hash.each do |season, holiday_hash|
-    holiday_hash.each do |holiday_name, supplies|
+  holiday_hash.each do |season, specific_holiday_hash|
+    specific_holiday_hash.each do |holiday_name, supplies|
       if supplies.include?("BBQ")
         holiday_name_with_bbq << holiday_name
       end
